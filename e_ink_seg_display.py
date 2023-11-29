@@ -266,8 +266,7 @@ class SegmentDisplay:
         value -= 100
 
     # convert to integer with at most 3 digits
-    val = int(round(value,1)*10)
-
+    val = int(round(value*10,0))
     # split of digits from right
     (rest,d2) = divmod(val,10)
     d2 = SegmentDisplay._NUMBERS[d2]
@@ -287,7 +286,7 @@ class SegmentDisplay:
 
     # update buffer
     for i,d in enumerate([d0,d1,d2]):
-      self._buffer[offsets[i]:offsets[i]+2] = d
+      self._buffer[offsets[i]:offsets[i]+2] = bytes(d)
     # add radix-point
     self._buffer[offsets[3]] |= SegmentDisplay._POINT 
 
@@ -297,7 +296,7 @@ class SegmentDisplay:
     """ set error to given offsets in the buffer """
 
     for i,d in enumerate(SegmentDisplay._NUMBERS[-3:]):
-      self._buffer[offsets[i]:offsets[i]+2] = d
+      self._buffer[offsets[i]:offsets[i]+2] = bytes(d)
   
   # --- send command to device   ---------------------------------------------
   
