@@ -266,7 +266,8 @@ class SegmentDisplay:
         value -= 100
 
     # convert to integer with at most 3 digits
-    val = int(round(value*10,0))
+    # round away from zero at x.y5 (works, since value is positive)
+    val = int(round(value*10,1)+0.5)
     # split of digits from right
     (rest,d2) = divmod(val,10)
     d2 = SegmentDisplay._NUMBERS[d2]
