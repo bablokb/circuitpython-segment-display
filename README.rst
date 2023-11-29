@@ -18,17 +18,18 @@ This CircuitPython driver fills the gap. Usage is simple:
 from e_ink_seg_display import SegmentDisplay
 import adafruit_ahtx0
 
-display = SegmentDisplay(i2c,rst_pin=PIN_RST,rst_busy=PIN_BUSY)
+display = SegmentDisplay(i2c,rst_pin=PIN_RST,busy_pin=PIN_BUSY)
 display.init()
 display.update_mode(full=False)
+display.clear()
 
 aht20 = adafruit_ahtx0.AHTx0(i2c)
 
 while True:
   display.set_temperature(aht20.temperature)
   display.set_humidity(aht20.relative_humidity)
-  diplay.update()
-  time.sleep(DELAY)
+  display.update()
+  time.sleep(INTERVAL)
 ```
 
 Porting to other languages (e.g. MicroPython or C/C++) should be simple,
