@@ -13,11 +13,17 @@ import board
 from e_ink_seg_display import SegmentDisplay
 
 # config (Blinka-board)
-i2c = board.I2C()
-PIN_RST = board.D27
-PIN_BUSY = board.D17
+#i2c = board.I2C()
+#PIN_RST = board.D27
+#PIN_BUSY = board.D17
+
+# config (Pico)
+i2c = board.STEMMA_I2C()
+PIN_RST = board.GP16
+PIN_BUSY = board.GP17
+
 # test value-range
-VALUES = [-123.4,-56.7,-8.9,0.0,1.2,34.5,167.8,234.5]
+VALUES = [-123.4,-56.7,-8.95,-8.9,0.0,2.2,2.25,34.5,167.8,234.5]
 DELAY = 3
 
 # --- tests   ----------------------------------------------------------------
