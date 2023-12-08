@@ -1,22 +1,3 @@
-# ----------------------------------------------------------------------------
-# e_ink_seg_display.py: driver for Waveshare 1.9" e-ink segment display
-#
-# Author: Bernhard Bablok
-# License: GPL3
-#
-# Website: https://github.com/bablokb/circuitpython-segment-display
-#
-# ----------------------------------------------------------------------------
-
-import time
-import digitalio
-from adafruit_bus_device.i2c_device import I2CDevice
-
-try:
-    import typing  # pylint: disable=unused-import
-except:
-    pass
-
 """
 Some technical stuff:
 
@@ -51,6 +32,24 @@ Bytes
    13: specials: temp-unit (0x05/0x06), BT (0x08), power (0x10), percent (0x20)
    14: unused
 """
+# ----------------------------------------------------------------------------
+# e_ink_seg_display.py: driver for Waveshare 1.9" e-ink segment display
+#
+# Author: Bernhard Bablok
+# License: GPL3
+#
+# Website: https://github.com/bablokb/circuitpython-segment-display
+#
+# ----------------------------------------------------------------------------
+
+import time
+import digitalio
+from adafruit_bus_device.i2c_device import I2CDevice
+
+try:
+    import typing  # pylint: disable=unused-import
+except:  # pylint: disable=bare-except
+    pass
 
 
 class SegmentDisplay:
@@ -91,7 +90,7 @@ class SegmentDisplay:
 
     # --- constructor   --------------------------------------------------------
 
-    def __init__(self, i2c, rst_pin, busy_pin, temp=20):
+    def __init__(self, i2c, rst_pin, busy_pin):
         """constructor"""
 
         self._i2c = i2c
@@ -108,7 +107,7 @@ class SegmentDisplay:
 
     # --- initialize device   --------------------------------------------------
 
-    def init(self, temp=None):
+    def init(self):
         """initialize device"""
 
         self.reset()
@@ -254,6 +253,7 @@ class SegmentDisplay:
 
     # --- set digits   ---------------------------------------------------------
 
+    # pylint: disable=invalid-name
     def _set_digits(self, value, offsets):
         """set digits to given offsets in the buffer"""
 
@@ -371,7 +371,7 @@ class SegmentDisplay:
 
         if self._temp is not None:
             # check if update is necessary
-            if (
+            if (  # pylint: disable=too-many-boolean-expressions
                 self._temp < 5
                 and temp < 5
                 or self._temp < 10
@@ -384,8 +384,7 @@ class SegmentDisplay:
                 and temp >= 20
             ):
                 return
-            else:
-                self._temp = temp
+            self._temp = temp
         else:
             self._temp = temp
 
